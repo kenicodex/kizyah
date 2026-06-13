@@ -39,12 +39,16 @@ export const config = {
     { label: 'Wolimot Niqqah', value: '11:00 AM' },
     { label: 'Engagement', value: '12:00 PM' },
     { label: 'Reception', value: '2:00 PM' },
-    { label: 'Theme Colors', value: 'Blue, Green & White' },
+    { label: 'Theme Colors', value: 'Navy blue, emerald & peach' },
   ],
 
   // Theme
   theme: {
-    colors: 'Blue, Green & White',
+    colors: 'Navy blue, Emerald & Peach',
+    colorNotes: [
+      'Burnt orange & brown',
+      "Bride's family: Peach & burgundy",
+    ],
     venue: 'Ikorodu Musical Village',
   },
 
@@ -110,6 +114,7 @@ export const config = {
   // Registry / Gifts
   registryOptions: [
     'Gift account: GTB 0210409669',
+    'Other account: 0284768340',
     'Heartfelt cards, prayers, and well-wishes are warmly welcome',
   ],
 
@@ -121,7 +126,7 @@ export const config = {
     },
     {
       title: 'What details should I share?',
-      detail: 'We will need your full name, number of extras, email address, and WhatsApp number so we can send you access cards.',
+      detail: 'We will need your full name, email address, WhatsApp number, and your plus one details if you are coming with one, so we can send your access cards.',
     },
     {
       title: 'When is the RSVP deadline?',

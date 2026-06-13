@@ -16,6 +16,12 @@ function colorToHex(name) {
   const table = {
     blue: '#3a6ea5',
     green: '#2f6b4f',
+    'navy blue': '#102a43',
+    emerald: '#0f8b6d',
+    peach: '#f7b89c',
+    'burnt orange': '#c65d1a',
+    brown: '#6f4e37',
+    burgundy: '#7a1f3d',
     white: '#f8fcfb',
     ivory: '#f7f2e8',
     gold: '#b89676',
@@ -56,7 +62,9 @@ function App() {
     fullName: '',
     email: '',
     whatsapp: '',
-    extras: '0',
+    plusOne: 'no',
+    plusOneName: '',
+    plusOneRelationship: '',
     note: '',
   })
   const observerRef = useRef(null)
@@ -122,7 +130,18 @@ function App() {
 
   const handleChange = (event) => {
     const { name, value } = event.target
-    setFormData((current) => ({ ...current, [name]: value }))
+    setFormData((current) => {
+      if (name === 'plusOne' && value === 'no') {
+        return {
+          ...current,
+          plusOne: value,
+          plusOneName: '',
+          plusOneRelationship: '',
+        }
+      }
+
+      return { ...current, [name]: value }
+    })
   }
 
   const handleSubmit = (event) => {
@@ -444,16 +463,16 @@ function App() {
               )}
               {config.formFields.extras && (
                 <label>
-                  Number of extras
-                  <input
-                    name="extras"
-                    type="number"
-                    min="0"
-                    value={formData.extras}
+                  Do you have a plus one?
+                  <select
+                    name="plusOne"
+                    value={formData.plusOne}
                     onChange={handleChange}
-                    placeholder="0"
                     required
-                  />
+                  >
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                  </select>
                 </label>
               )}
               {config.formFields.email && (
@@ -482,6 +501,35 @@ function App() {
                   />
                 </label>
               )}
+              {formData.plusOne === 'yes' && (
+                <>
+                  <label>
+                    Plus one full name
+                    <input
+                      name="plusOneName"
+                      type="text"
+                      value={formData.plusOneName}
+                      onChange={handleChange}
+                      placeholder="Enter your plus one's full name"
+                      required
+                    />
+                  </label>
+                  <label>
+                    Relationship with the couple
+                    <select
+                      name="plusOneRelationship"
+                      value={formData.plusOneRelationship}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Select relationship</option>
+                      <option value="Friends">Friends</option>
+                      <option value="Family">Family</option>
+                      <option value="Well wisher">Well wisher</option>
+                    </select>
+                  </label>
+                </>
+              )}
             </div>
             {config.formFields.note && (
               <label>
@@ -500,7 +548,10 @@ function App() {
             </button>
             {isSubmitted ? (
               <p className="success-note">
-                Thank you, {formData.fullName}. Your RSVP has been received for you plus {formData.extras} extra(s).
+                Thank you, {formData.fullName}. Your RSVP has been received
+                {formData.plusOne === 'yes'
+                  ? ` with your plus one, ${formData.plusOneName}.`
+                  : '.'}
               </p>
             ) : null}
           </form>
@@ -576,6 +627,13 @@ function App() {
                   </span>
                 ))}
               </div>
+              {config.theme.colorNotes?.length ? (
+                <ul className="detail-list">
+                  {config.theme.colorNotes.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              ) : null}
               <p>
                 Guests are encouraged to wear our theme colors to make the celebration even more beautiful.
               </p>
