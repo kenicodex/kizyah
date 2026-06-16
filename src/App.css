@@ -3,8 +3,8 @@
   top: calc(1.5rem + var(--progress-h, 0px));
   right: 1.5rem;
   z-index: 1000;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 2.6rem;
+  height: 2.6rem;
   border-radius: 50%;
   border: 1px solid var(--card-border);
   background: var(--card);
@@ -13,13 +13,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   box-shadow: var(--shadow-soft);
+  opacity: 0.78;
   transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s ease;
 }
 
 .theme-toggle:hover {
   transform: scale(1.1) rotate(15deg);
+  opacity: 0.9;
 }
 
 .theme-toggle:active {
@@ -322,6 +324,25 @@
   transform: translateY(-2px) scale(0.98);
 }
 
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+  filter: saturate(0.6);
+}
+
+/* Accessible keyboard focus ring across interactive elements */
+.button:focus-visible,
+.nav-links a:focus-visible,
+.social-links a:focus-visible,
+.venue-card a:focus-visible,
+.copy-button:focus-visible,
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .button-primary {
   color: #0e2e4c;
   background: linear-gradient(135deg, #ffffff, #cfe6dc);
@@ -446,6 +467,45 @@
   line-height: 1.1;
 }
 
+.copy-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+.copy-text {
+  user-select: text;
+}
+
+.copy-button {
+  flex: 0 0 auto;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04rem;
+  text-transform: uppercase;
+  padding: 0.55rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--text-h);
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.copy-button:hover {
+  transform: translateY(-1px);
+  background: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='dark'] .copy-button {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='dark'] .copy-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
 .gift-note {
   margin-top: 0.9rem;
   color: var(--text);
@@ -528,6 +588,8 @@
   font-size: clamp(2.2rem, 5vw, 3.5rem);
   color: #fff;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
 }
 
 .facts-strip {
@@ -819,6 +881,43 @@
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
+.rsvp-form textarea {
+  resize: vertical;
+  min-height: 6rem;
+}
+
+.rsvp-form input::placeholder,
+.rsvp-form textarea::placeholder {
+  color: color-mix(in srgb, var(--text) 60%, transparent);
+}
+
+.rsvp-form input:hover,
+.rsvp-form select:hover,
+.rsvp-form textarea:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--card-border));
+}
+
+.rsvp-form input:focus,
+.rsvp-form select:focus,
+.rsvp-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+/* Custom dropdown arrow so selects match the rest of the form */
+.rsvp-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+    linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+  background-position: calc(100% - 1.35rem) center, calc(100% - 1rem) center;
+  background-size: 0.4rem 0.4rem, 0.4rem 0.4rem;
+  background-repeat: no-repeat;
+  padding-right: 2.75rem;
+  cursor: pointer;
+}
+
 .rsvp-form label {
   display: flex;
   flex-direction: column;
@@ -948,5 +1047,31 @@
   .parallax-banner {
     min-height: 20rem;
     background-attachment: scroll;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .button:hover,
+  .fact-card:hover,
+  .glass-card:hover,
+  .venue-card:hover,
+  .faq-card:hover,
+  .feature-card:hover,
+  .countdown-grid div:hover {
+    transform: none;
   }
 }
