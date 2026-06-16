@@ -39,15 +39,15 @@ export const config = {
     { label: 'Wolimot Niqqah', value: '11:00 AM' },
     { label: 'Engagement', value: '12:00 PM' },
     { label: 'Reception', value: '2:00 PM' },
-    { label: 'Theme Colors', value: 'Navy blue, emerald & peach' },
+    { label: 'Theme Colors', value: 'Burnt orange, olive green & champagne gold' },
   ],
 
   // Theme
   theme: {
-    colors: 'Navy blue, Emerald & Peach',
+    colors: 'Burnt orange, Brown, Olive green, Burgundy & Champagne gold',
     colorNotes: [
-      'Burnt orange & brown',
-      "Bride's family: Peach & burgundy",
+      "Groom's family — Women: Burnt orange with brown gele; Men: Brown polished lace with orange cap",
+      "Bride's family — Women: Olive green with burgundy gele; Men: Champagne gold polished lace with burgundy cap",
     ],
     venue: 'Ikorodu Musical Village',
   },
@@ -113,8 +113,8 @@ export const config = {
 
   // Registry / Gifts
   registryOptions: [
-    'Gift account: GTB 0210409669',
-    'Other account: 0284768340',
+    '0210409669 — Guaranty Trust Bank — Salaudeen Oluwatobiloba Abiodun',
+    '0284768340 — Alat/Wema — Balogun Kizmat Omowaleola',
     'Heartfelt cards, prayers, and well-wishes are warmly welcome',
   ],
 
