@@ -69,6 +69,7 @@ function App() {
   const [pageScrollProgress, setPageScrollProgress] = useState(0);
   const [formData, setFormData] = useState({
     fullName: "",
+    guestOf: "",
     email: "",
     whatsapp: "",
     plusOne: "no",
@@ -164,6 +165,7 @@ function App() {
     const date = new Date();
     const inputValue = {
       "Full Name": formData.fullName,
+      "Guest Of": formData.guestOf,
       Email: formData.email,
       WhatsApp: formData.whatsapp.replace(/\s+/g, ""),
       "Has Plus One": formData.plusOne,
@@ -379,6 +381,7 @@ function App() {
           <div className="hero-grid">
             <div className="hero-copy">
               <p className="eyebrow">A celebration of love, faith and family</p>
+              <p className="eyebrow">{config.couple.hashtag}</p>
               <h1>
                 {config.couple.bride} <span>&</span> {config.couple.groom}
               </h1>
@@ -598,6 +601,46 @@ function App() {
                     required
                   />
                 </label>
+              )}
+              <label>
+                Guest of the Bride or Groom?
+                <select
+                  name="guestOf"
+                  value={formData.guestOf}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="bride">Bride</option>
+                  <option value="groom">Groom</option>
+                </select>
+              </label>
+              {formData.guestOf && (
+                <article className="glass-card" style={{ marginTop: "1rem", padding: "1rem" }}>
+                  <p className="eyebrow" style={{ marginBottom: "0.5rem" }}>
+                    Asoebi contact
+                  </p>
+                  <p>
+                    For {formData.guestOf === "bride" ? "Bride's family" : "Groom's family"} asoebi, contact:
+                  </p>
+                  <div className="copy-row" style={{ marginTop: "0.5rem" }}>
+                    <span className="copy-text">
+                      {formData.guestOf === "bride" ? config.asoebiContacts.bride : config.asoebiContacts.groom}
+                    </span>
+                    <button
+                      type="button"
+                      className="copy-button"
+                      onClick={() =>
+                        copyToClipboard(
+                          formData.guestOf === "bride" ? config.asoebiContacts.bride : config.asoebiContacts.groom,
+                          "asoebi"
+                        )
+                      }
+                    >
+                      {copiedKey === "asoebi" ? "Copied" : "Copy"}
+                    </button>
+                  </div>
+                </article>
               )}
               {config.formFields.extras && (
                 <label>
@@ -854,6 +897,7 @@ function App() {
           <div className="section-heading">
             <p className="eyebrow">Stay connected</p>
             <h2>Share the joy</h2>
+            <p>{config.couple.hashtag}</p>
           </div>
           <div className="social-links">
             {config.socialLinks.map((link, i) => (

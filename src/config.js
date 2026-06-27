@@ -14,7 +14,7 @@ export const config = {
     groom: 'Oluwatobiloba',
     brideFull: 'Balogun Omowaleola',
     groomFull: 'Oluwatobiloba Salaudeen',
-    hashtag: '#OmowaleolaAndOluwatobiloba',
+    hashtag: '#O2Forever2026',
   },
 
   // Wedding date and time
@@ -136,9 +136,14 @@ export const config = {
 
   // Social & Contact
   socialLinks: [
-    { label: '#OmowaleolaAndOluwatobiloba', href: 'https://instagram.com/explore/tags/wedding/' },
+    { label: '#O2Forever2026', href: 'https://instagram.com/explore/tags/wedding/' },
     { label: 'Coordinator: +234 808 298 6043', href: 'tel:+2348082986043' },
   ],
+  // WhatsApp contacts for Asoebi
+  asoebiContacts: {
+    bride: '+234 812 032 4345',
+    groom: '+234 802 232 7703',
+  },
 
   // Venues & Maps
   venueLinks: [
