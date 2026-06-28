@@ -36,7 +36,7 @@ export const config = {
   weddingFacts: [
     { label: 'Date', value: 'Saturday, August 8, 2026' },
     { label: 'Venue', value: 'Ikorodu Musical Village' },
-    { label: 'Wolimot Niqqah', value: '11:00 AM' },
+    { label: 'Wolimot Nikkah', value: '11:00 AM' },
     { label: 'Engagement', value: '12:00 PM' },
     { label: 'Reception', value: '2:00 PM' },
     { label: 'Theme Colors', value: 'Burnt orange, olive green & champagne gold' },
@@ -72,7 +72,7 @@ export const config = {
   timeline: [
     {
       time: '11:00 AM',
-      title: 'Wolimot Niqqah',
+      title: 'Wolimot Nikkah',
       detail: 'The sacred Islamic marriage ceremony joining the couple in faith.',
     },
     {

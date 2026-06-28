@@ -69,11 +69,12 @@ function App() {
   const [pageScrollProgress, setPageScrollProgress] = useState(0);
   const [formData, setFormData] = useState({
     fullName: "",
-    guestOf: "",
     email: "",
     whatsapp: "",
     plusOne: "no",
     plusOneName: "",
+    plusOneHasAccessCard: "",
+    plusOneGuestOf: "",
     plusOneRelationship: "",
     note: "",
   });
@@ -149,6 +150,8 @@ function App() {
           ...current,
           plusOne: value,
           plusOneName: "",
+          plusOneHasAccessCard: "",
+          plusOneGuestOf: "",
           plusOneRelationship: "",
         };
       }
@@ -165,12 +168,15 @@ function App() {
     const date = new Date();
     const inputValue = {
       "Full Name": formData.fullName,
-      "Guest Of": formData.guestOf,
       Email: formData.email,
       WhatsApp: formData.whatsapp.replace(/\s+/g, ""),
       "Has Plus One": formData.plusOne,
       "Plus One Name":
         formData.plusOne === "yes" ? formData.plusOneName : "N/A",
+      "Plus One Has Access Card":
+        formData.plusOne === "yes" ? formData.plusOneHasAccessCard || "N/A" : "N/A",
+      "Plus One Guest Of":
+        formData.plusOne === "yes" ? formData.plusOneGuestOf || "N/A" : "N/A",
       "Relationship With the Couple": formData.plusOneRelationship,
       Note: formData.note || "N/A",
       "Created At": date.toLocaleString(),
@@ -226,6 +232,14 @@ function App() {
   };
 
   const isCopyableAccountLine = (value) => /^\d/.test(String(value || "").trim());
+  const selectedAsoebiContact = formData.plusOneGuestOf
+    ? config.asoebiContacts[formData.plusOneGuestOf]
+    : "";
+  const selectedAsoebiLabel =
+    formData.plusOneGuestOf === "bride" ? "Bride's side" : "Groom's side";
+  const selectedAsoebiHref = selectedAsoebiContact
+    ? `https://wa.me/${selectedAsoebiContact.replace(/\D/g, "")}`
+    : "";
 
   const handleStepChange = (newStep) => {
     if (isStepper) {
@@ -602,46 +616,6 @@ function App() {
                   />
                 </label>
               )}
-              <label>
-                Guest of the Bride or Groom?
-                <select
-                  name="guestOf"
-                  value={formData.guestOf}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select</option>
-                  <option value="bride">Bride</option>
-                  <option value="groom">Groom</option>
-                </select>
-              </label>
-              {formData.guestOf && (
-                <article className="glass-card" style={{ marginTop: "1rem", padding: "1rem" }}>
-                  <p className="eyebrow" style={{ marginBottom: "0.5rem" }}>
-                    Asoebi contact
-                  </p>
-                  <p>
-                    For {formData.guestOf === "bride" ? "Bride's family" : "Groom's family"} asoebi, contact:
-                  </p>
-                  <div className="copy-row" style={{ marginTop: "0.5rem" }}>
-                    <span className="copy-text">
-                      {formData.guestOf === "bride" ? config.asoebiContacts.bride : config.asoebiContacts.groom}
-                    </span>
-                    <button
-                      type="button"
-                      className="copy-button"
-                      onClick={() =>
-                        copyToClipboard(
-                          formData.guestOf === "bride" ? config.asoebiContacts.bride : config.asoebiContacts.groom,
-                          "asoebi"
-                        )
-                      }
-                    >
-                      {copiedKey === "asoebi" ? "Copied" : "Copy"}
-                    </button>
-                  </div>
-                </article>
-              )}
               {config.formFields.extras && (
                 <label>
                   Do you have a plus one?
@@ -656,6 +630,86 @@ function App() {
                   </select>
                 </label>
               )}
+              {formData.plusOne === "yes" && (
+                <label>
+                  Plus one full name
+                  <input
+                    name="plusOneName"
+                    type="text"
+                    value={formData.plusOneName}
+                    onChange={handleChange}
+                    placeholder="Enter your plus one's full name"
+                    required
+                  />
+                </label>
+              )}
+              {formData.plusOne === "yes" && (
+                <label>
+                  Does your plus one already have an access card?
+                  <select
+                    name="plusOneHasAccessCard"
+                    value={formData.plusOneHasAccessCard}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </label>
+              )}
+              {formData.plusOne === "yes" ? (
+                <label>
+                  Is your plus one a guest of the bride or groom?
+                  <select
+                    name="plusOneGuestOf"
+                    value={formData.plusOneGuestOf}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select</option>
+                    <option value="bride">Bride</option>
+                    <option value="groom">Groom</option>
+                  </select>
+                </label>
+              ) : null}
+              {formData.plusOne === "yes" &&
+              formData.plusOneHasAccessCard === "no" &&
+              selectedAsoebiContact ? (
+                <article
+                  className="glass-card"
+                  style={{ marginTop: "1rem", padding: "1rem" }}
+                >
+                  <p className="eyebrow" style={{ marginBottom: "0.5rem" }}>
+                    Plus one cloth contact
+                  </p>
+                  <p>
+                    Your plus one should contact the {selectedAsoebiLabel} vendor
+                    for gele or cap.
+                  </p>
+                  <div className="copy-row" style={{ marginTop: "0.75rem" }}>
+                    <span className="copy-text">{selectedAsoebiContact}</span>
+                    <button
+                      type="button"
+                      className="copy-button"
+                      onClick={() =>
+                        copyToClipboard(selectedAsoebiContact, "plus-one-asoebi")
+                      }
+                    >
+                      {copiedKey === "plus-one-asoebi" ? "Copied" : "Copy"}
+                    </button>
+                  </div>
+                  <a
+                    className="button button-secondary"
+                    href={selectedAsoebiHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ marginTop: "0.75rem" }}
+                  >
+                    Open WhatsApp
+                  </a>
+                </article>
+              ) : null}
               {config.formFields.email && (
                 <label>
                   Email address
@@ -696,19 +750,6 @@ function App() {
                   <option value="Well wisher">Well wisher</option>
                 </select>
               </label>
-              {formData.plusOne === "yes" && (
-                <label>
-                  Plus one full name
-                  <input
-                    name="plusOneName"
-                    type="text"
-                    value={formData.plusOneName}
-                    onChange={handleChange}
-                    placeholder="Enter your plus one's full name"
-                    required
-                  />
-                </label>
-              )}
             </div>
             {config.formFields.note && (
               <label>
